@@ -1,0 +1,81 @@
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 889px;
+    min-width: 300px;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 889px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+  }
+
+  .mat-header-cell{
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    padding: 15px;
+    border-right: 1px solid #dee2e6;
+  }
+
+  .mat-cell{
+    padding: 15px;
+    border-right: 1px solid #dee2e6;
+  }
+
+  .mat-row:nth-child(even){
+    background-color:#c3e6cb;
+  }
+
+  .mat-row:nth-child(odd){
+    background-color:#b8daff;
+  }
+  
+  .w-75{
+    max-width: 75px;
+  }
+
+  .w-160{
+    max-width: 160px;
+  }
+
+  .w-100{
+    max-width: 100px;
+  }
+
+  .w-150{
+    max-width: 150px;
+  }
+
+  .h-250{
+    max-height: 250px;
+  }
+
+  .p-15{
+    padding-right: 15px;
+  }
+
+  .nav-p{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-bar{
+    color: white;
+  }
+
+  .mat-header-row{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }

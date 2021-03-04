@@ -1,0 +1,117 @@
+<p class="nav-p">
+  <mat-toolbar class="navbar navbar-expand-sm bg-dark navbar-dark nav-bar">
+    <div *ngIf="!loader">
+      <mat-form-field class="select-form no-line">
+        <mat-label>Images</mat-label>
+        <mat-select multiple>
+          <mat-option *ngFor="let item of images" [value]="item" (onSelectionChange)="applyFilter($event)">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-toolbar>
+</p>
+<div *ngIf="!loader">
+    <div class="example-container mat-elevation-z8">
+
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="aws_image_path">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Aws Image Path </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngClass]="'h-250'" style="display: inline;">
+            <a href={{row.image_url}} target="_blank" rel="noopener noreferrer">{{row.aws_image_path | splitLast:'/' | uppercase}}</a>
+            <section>
+              <mat-checkbox (click)="deleteImageData(row)">Delete Image</mat-checkbox>
+            </section>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="add_row">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-160 h-250'"> Add Row </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i;" [ngClass]="'w-160 h-250'">
+            <button mat-stroked-button style="height: 30px;" (click)="addRow(i, row)">Add Row Below</button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Account_Details">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Account Details </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngClass]="'h-250'"> {{row.Account_Details}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Text">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Text </mat-header-cell>
+          <mat-cell *matCellDef="let row" [ngClass]="'h-250 editable'" contenteditable="true"> {{row.Text}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Domain Dictionary - Wine Name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Domain Dictionary - Wine Name </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250 editable'" contenteditable="true"> {{row["Domain Dictionary - Wine Name"]}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Wine Name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Name </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'">
+            <mat-form-field class="select-form no-line" *ngIf="row.added === undefined">
+              <mat-label>Wine Name</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of correctDomainName[i]" [value]="item" (onSelectionChange)="wineNameChange(item, row)">{{item["Domain Dictionary - Wine Name"]}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Wine Varietal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-150 h-250'"> Wine Varietal </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-150 h-250 editable'" contenteditable="true"> {{row["Wine Varietal"]}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Wine Type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-100 h-250'"> Wine Type </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-100 h-250 editable'" contenteditable="true"> {{row["Wine Type"]}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="BTG">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-75 h-250'"> BTG </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" contenteditable="true"> {{row.BTG}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="BTB">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-75 h-250'"> BTB </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" contenteditable="true"> {{row.BTB}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Confidence">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-100 h-250'"> Confidence </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-100 h-250'"> {{row.Confidence}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Status </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'" style="display: inline;">
+            <span class="p-15"><input type="radio" name="status{{i}}" value="valid" (click)="radioChange(row, 'valid')"> Valid</span>
+            <span class="p-15"><input type="radio" name="status{{i}}" value="invalid" (click)="radioChange(row, 'invalid')"> InValid </span>
+            <span class="p-15"><mat-checkbox (click)="deleteData(row)">Delete</mat-checkbox></span>
+            <span class="p-15"><mat-checkbox [checked]="row.Review == undefined">Not Reviewed{{status[i]}}</mat-checkbox></span>
+            <span class="p-15"><mat-checkbox>Escalate</mat-checkbox></span>
+          </mat-cell> 
+        </ng-container> 
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+      </mat-table>
+    </div>
+</div>
+
+<div *ngIf="loader">
+  <i
+    class="fa fa-spinner fa-pulse fa-spin fa-1x fa-fw"
+    style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -50px;
+      margin-left: -100px;
+      font-size: 30px;
+    "
+  ></i>
+</div>
