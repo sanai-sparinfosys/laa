@@ -1,8 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { HttpService } from './service/http.service'
+import { HttpService } from './service/http.service';
+import { startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-root',
@@ -188,5 +192,66 @@ export class AppComponent implements OnInit{
         });
       }
     }
+  }
+
+  keyword = 'name';
+  public countries = [
+    {
+      id: 1,
+      name: 'Albania',
+    },
+    {
+      id: 2,
+      name: 'Belgium',
+    },
+    {
+      id: 3,
+      name: 'Denmark',
+    },
+    {
+      id: 4,
+      name: 'Montenegro',
+    },
+    {
+      id: 5,
+      name: 'Turkey',
+    },
+    {
+      id: 6,
+      name: 'Ukraine',
+    },
+    {
+      id: 7,
+      name: 'Macedonia',
+    },
+    {
+      id: 8,
+      name: 'Slovenia',
+    },
+    {
+      id: 9,
+      name: 'Georgia',
+    },
+    {
+      id: 10,
+      name: 'India',
+    },
+    {
+      id: 11,
+      name: 'Russia',
+    },
+    {
+      id: 12,
+      name: 'Switzerland',
+    }
+  ];
+  
+  selectEvent(item) {
+  }
+
+  onChangeSearch(search: string) {
+  }
+
+  onFocused(e) {
   }
 }

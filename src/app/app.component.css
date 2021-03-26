@@ -5,6 +5,13 @@
     min-width: 300px;
   }
 
+  .ng-autocomplete {
+    width:100%;
+    max-width: 600px;
+    display: table;
+    margin: 0 auto;
+  }
+
   .mat-table {
     overflow: auto;
     max-height: 889px;
