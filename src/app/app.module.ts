@@ -17,12 +17,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { UniquePipe } from './pipes/unique.pipe';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    SplitLastPipe
+    SplitLastPipe,
+    UniquePipe
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     MatIconModule,
     MatButtonModule,
     MatAutocompleteModule,
-    AutocompleteLibModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

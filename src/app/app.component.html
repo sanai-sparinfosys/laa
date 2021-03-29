@@ -49,75 +49,60 @@
 
         <ng-container matColumnDef="Wine Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Name </mat-header-cell>
-          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250 ng-autocomplete'">
-            <ng-autocomplete 
-            [data]="correctDomainName[i]"
-            [searchKeyword]="keyword"
-            placeholder="Enter the Wine Name"
-            (selected)='selectEvent($event)'
-            (inputChanged)='onChangeSearch($event)'
-            (inputFocused)='onFocused($event)'
-            historyIdentifier="correctDomainName[i]"
-            [itemTemplate]="itemTemplate"
-            [notFoundTemplate]="notFoundTemplate">                                 
-            </ng-autocomplete>
-
-            <ng-template #itemTemplate let-item>
-            <a [innerHTML]="item['Domain Dictionary - Wine Name']"></a>
-            </ng-template>
-
-            <ng-template #notFoundTemplate let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
+          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'">
+            <mat-form-field class="example-full-width">
+              <mat-label>Wine Name</mat-label>
+              <input type="text"
+                     placeholder="Enter wine name"
+                     aria-label="Wine Name"
+                     matInput
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let item of correctDomainName[i]" [value]="item['Domain Dictionary - Wine Name']" (onSelectionChange)="wineNameChange(item, row)">
+                  {{item['Domain Dictionary - Wine Name']}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Wine Varietal">
-          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-150 h-250'"> Wine Varietal </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-150 h-250 editable'" contenteditable="true"> 
-            <ng-autocomplete 
-            [data]="correctDomainName[i]"
-            [searchKeyword]="keyword"
-            placeholder="Enter the Wine Name"
-            (selected)='selectEvent($event)'
-            (inputChanged)='onChangeSearch($event)'
-            (inputFocused)='onFocused($event)'
-            historyIdentifier="correctDomainName[i]"
-            [itemTemplate]="itemTemplate1"
-            [notFoundTemplate]="notFoundTemplate1">                                 
-            </ng-autocomplete>
-
-            <ng-template #itemTemplate1 let-item>
-            <a [innerHTML]="item['Wine Varietal']"></a>
-            </ng-template>
-
-            <ng-template #notFoundTemplate1 let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Varietal </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'"> 
+            <mat-form-field class="example-full-width">
+              <mat-label>Wine Varietal</mat-label>
+              <input type="text"
+                     placeholder="Enter wine varietal"
+                     aria-label="Wine Varietal"
+                     matInput
+                     [(ngModel)]="row['Wine Varietal']"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let item of correctDomainName[i] | unique" [value]="item['Wine Varietal']">
+                  {{item['Wine Varietal']}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Wine Type">
-          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-100 h-250'"> Wine Type </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-100 h-250 editable'" contenteditable="true"> <ng-autocomplete 
-            [data]="correctDomainName[i]"
-            [searchKeyword]="keyword"
-            placeholder="Enter the Wine Name"
-            (selected)='selectEvent($event)'
-            (inputChanged)='onChangeSearch($event)'
-            (inputFocused)='onFocused($event)'
-            historyIdentifier="correctDomainName[i]"
-            [itemTemplate]="itemTemplate2"
-            [notFoundTemplate]="notFoundTemplate2">                                 
-            </ng-autocomplete>
-
-            <ng-template #itemTemplate2 let-item>
-            <a [innerHTML]="item['Wine Type']"></a>
-            </ng-template>
-
-            <ng-template #notFoundTemplate2 let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
+          <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Type </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'">
+            <mat-form-field class="example-full-width">
+              <mat-label>Wine Type</mat-label>
+              <input type="text"
+                     placeholder="Enter wine type"
+                     aria-label="Wine Type"
+                     matInput
+                     [(ngModel)]="row['Wine Type']"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let item of correctDomainName[i] | unique" [value]="item['Wine Type']">
+                  {{item['Wine Type']}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </mat-cell>
         </ng-container>
 
@@ -146,7 +131,6 @@
             <span class="p-15"><mat-checkbox>Escalate</mat-checkbox></span>
           </mat-cell> 
         </ng-container> 
-
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;">
         </mat-row>
