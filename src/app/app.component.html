@@ -3,8 +3,8 @@
     <div *ngIf="!loader">
       <mat-form-field class="select-form no-line">
         <mat-label>Images</mat-label>
-        <mat-select multiple>
-          <mat-option *ngFor="let item of images" [value]="item" (onSelectionChange)="applyFilter($event)">{{item}}</mat-option>
+        <mat-select>
+          <mat-option *ngFor="let item of images" [value]="item.aws_image_path" (onSelectionChange)="applyFilter($event)">{{removePath(item.aws_image_path)}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
