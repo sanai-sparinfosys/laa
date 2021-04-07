@@ -135,6 +135,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;">
         </mat-row>
       </mat-table>
+      <mat-paginator [pageSizeOptions]="pages" (page)="paginationChange($event)"></mat-paginator>
     </div>
 </div>
 

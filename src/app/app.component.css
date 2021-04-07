@@ -5,6 +5,10 @@
     min-width: 300px;
   }
 
+  .mat-paginator-range-actions{
+    display: none !important;
+  }
+
   .ng-autocomplete {
     width:100%;
     max-width: 600px;

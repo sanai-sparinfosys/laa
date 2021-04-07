@@ -37,6 +37,7 @@ export class AppComponent implements OnInit{
   status = [];
   correctDomainName = [];
   machedData = [];
+  pages = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -51,6 +52,9 @@ export class AppComponent implements OnInit{
     this.loader = true;
     this._httpService.getImages().subscribe((res) => {
       this.images = res;
+      for(var i=0;i<this.images.length;i++){
+        this.pages.push(i);
+      }
       this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
         this.loader = false;
         this.allData = JSON.parse(data.matched_data);
@@ -58,13 +62,47 @@ export class AppComponent implements OnInit{
           return el.Status.indexOf("Matched With") >= 0;
         });
         this.dataSource = new MatTableDataSource(this.machedData);
+        this.dataSource.paginator = this.paginator;
         this.domainNameList(this.allData, this.machedData);
         this.dataSource.sort = this.sort;
       });
     });
   }
 
-  public removePath(path: string): string {
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  paginationChange(event){
+    var image = this.images[event.pageSize].aws_image_path;
+    this._httpService.getData(image).subscribe((data) => {
+      this.allData = JSON.parse(data.matched_data);
+      this.machedData = this.allData.filter((el) => {
+        return el.Status.indexOf("Matched With") >= 0;
+      });
+      if(this.searchKeyData.indexOf(image) > -1){
+        this.searchKeyData.splice(this.searchKeyData.indexOf(image), 1);
+      } else {
+        this.searchKeyData.push(image);
+      }
+      this.searchResult = [];
+      if(this.searchKeyData.length === 0){
+        this.searchResult = this.machedData;
+      } else {
+        this.searchResult = this.machedData.filter((el) => {
+          return this.searchKeyData.some((f) => {
+            return el.aws_image_path.toLowerCase().indexOf(f.toLowerCase()) >= 0;
+          });
+        });
+      }
+      this.domainNameList(this.searchResult, this.allData);
+      this.dataSource = new MatTableDataSource(this.searchResult);
+      this.ref.detectChanges();
+    });
+  }
+
+  removePath(path: string): string {
     return path.split("/").pop();
   }
 
