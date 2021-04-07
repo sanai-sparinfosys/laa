@@ -75,7 +75,6 @@ export class AppComponent implements OnInit{
   }
 
   paginationChange(event){
-    debugger
     var image = this.images[event.pageSize - 1].aws_image_path;
     this._httpService.getData(image).subscribe((data) => {
       this.allData = JSON.parse(data.matched_data);
