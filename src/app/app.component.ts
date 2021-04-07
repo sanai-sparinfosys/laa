@@ -52,8 +52,8 @@ export class AppComponent implements OnInit{
     this.loader = true;
     this._httpService.getImages().subscribe((res) => {
       this.images = res;
-      for(var i=0;i<4;i++){
-        this.pages.push(i);
+      for(var i=0;i<5;i++){
+        this.pages.push(i+1);
       }
       this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
         this.loader = false;
@@ -75,7 +75,8 @@ export class AppComponent implements OnInit{
   }
 
   paginationChange(event){
-    var image = this.images[event.pageSize].aws_image_path;
+    debugger
+    var image = this.images[event.pageSize - 1].aws_image_path;
     this._httpService.getData(image).subscribe((data) => {
       this.allData = JSON.parse(data.matched_data);
       this.machedData = this.allData.filter((el) => {
