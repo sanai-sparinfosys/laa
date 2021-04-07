@@ -11,8 +11,8 @@
   </mat-toolbar>
 </p>
 <div *ngIf="!loader">
+  <mat-paginator [pageSizeOptions]="pages" (page)="paginationChange($event)"></mat-paginator>
     <div class="example-container mat-elevation-z8">
-
       <mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="aws_image_path">
@@ -135,7 +135,6 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;">
         </mat-row>
       </mat-table>
-      <mat-paginator [pageSizeOptions]="pages" (page)="paginationChange($event)"></mat-paginator>
     </div>
 </div>
 

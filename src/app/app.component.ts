@@ -52,7 +52,7 @@ export class AppComponent implements OnInit{
     this.loader = true;
     this._httpService.getImages().subscribe((res) => {
       this.images = res;
-      for(var i=0;i<this.images.length;i++){
+      for(var i=0;i<4;i++){
         this.pages.push(i);
       }
       this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
