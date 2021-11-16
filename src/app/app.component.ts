@@ -4,9 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from './service/http.service';
-import { startWith } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-root',
@@ -57,48 +54,47 @@ export class AppComponent implements OnInit{
       }
       this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
         this.loader = false;
-        this.allData = JSON.parse(data.matched_data);
-        this.machedData = this.allData.filter((el) => {
-          return el.Status.indexOf("Matched With") >= 0;
-        });
-        this.dataSource = new MatTableDataSource(this.machedData);
-        this.dataSource.paginator = this.paginator;
-        this.domainNameList(this.allData, this.machedData);
-        this.dataSource.sort = this.sort;
+        if(Object.keys(data).length != 0){
+          this.allData = JSON.parse(data.matched_data);
+          this.machedData = this.allData.filter((el) => {
+            return el.Status.indexOf("Matched With") >= 0;
+          });
+          this.dataSource = new MatTableDataSource(this.machedData);
+          this.dataSource.paginator = this.paginator;
+          this.domainNameList(this.allData, this.machedData);
+          this.dataSource.sort = this.sort;
+        }
       });
     });
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   paginationChange(event){
     var image = this.images[event.pageSize - 1].aws_image_path;
     this._httpService.getData(image).subscribe((data) => {
-      this.allData = JSON.parse(data.matched_data);
-      this.machedData = this.allData.filter((el) => {
-        return el.Status.indexOf("Matched With") >= 0;
-      });
-      if(this.searchKeyData.indexOf(image) > -1){
-        this.searchKeyData.splice(this.searchKeyData.indexOf(image), 1);
-      } else {
-        this.searchKeyData.push(image);
-      }
-      this.searchResult = [];
-      if(this.searchKeyData.length === 0){
-        this.searchResult = this.machedData;
-      } else {
-        this.searchResult = this.machedData.filter((el) => {
-          return this.searchKeyData.some((f) => {
-            return el.aws_image_path.toLowerCase().indexOf(f.toLowerCase()) >= 0;
-          });
+      if(Object.keys(data).length != 0){
+        this.allData = JSON.parse(data.matched_data);
+        this.machedData = this.allData.filter((el) => {
+          return el.Status.indexOf("Matched With") >= 0;
         });
+        if(this.searchKeyData.indexOf(image) > -1){
+          this.searchKeyData.splice(this.searchKeyData.indexOf(image), 1);
+        } else {
+          this.searchKeyData.push(image);
+        }
+        this.searchResult = [];
+        if(this.searchKeyData.length === 0){
+          this.searchResult = this.machedData;
+        } else {
+          this.searchResult = this.machedData.filter((el) => {
+            return this.searchKeyData.some((f) => {
+              return el.aws_image_path.toLowerCase().indexOf(f.toLowerCase()) >= 0;
+            });
+          });
+        }
+        this.domainNameList(this.searchResult, this.allData);
+        this.dataSource = new MatTableDataSource(this.searchResult);
+        this.ref.detectChanges();
       }
-      this.domainNameList(this.searchResult, this.allData);
-      this.dataSource = new MatTableDataSource(this.searchResult);
-      this.ref.detectChanges();
     });
   }
 
@@ -108,28 +104,30 @@ export class AppComponent implements OnInit{
 
   applyFilter(filterValue) {
     this._httpService.getData(filterValue.source.value).subscribe((data) => {
-      this.allData = JSON.parse(data.matched_data);
-      this.machedData = this.allData.filter((el) => {
-        return el.Status.indexOf("Matched With") >= 0;
-      });
-      if(this.searchKeyData.indexOf(filterValue.source.value) > -1){
-        this.searchKeyData.splice(this.searchKeyData.indexOf(filterValue.source.value), 1);
-      } else {
-        this.searchKeyData.push(filterValue.source.value);
-      }
-      this.searchResult = [];
-      if(this.searchKeyData.length === 0){
-        this.searchResult = this.machedData;
-      } else {
-        this.searchResult = this.machedData.filter((el) => {
-          return this.searchKeyData.some((f) => {
-            return el.aws_image_path.toLowerCase().indexOf(f.toLowerCase()) >= 0;
-          });
+      if(Object.keys(data).length != 0){
+        this.allData = JSON.parse(data.matched_data);
+        this.machedData = this.allData.filter((el) => {
+          return el.Status.indexOf("Matched With") >= 0;
         });
+        if(this.searchKeyData.indexOf(filterValue.source.value) > -1){
+          this.searchKeyData.splice(this.searchKeyData.indexOf(filterValue.source.value), 1);
+        } else {
+          this.searchKeyData.push(filterValue.source.value);
+        }
+        this.searchResult = [];
+        if(this.searchKeyData.length === 0){
+          this.searchResult = this.machedData;
+        } else {
+          this.searchResult = this.machedData.filter((el) => {
+            return this.searchKeyData.some((f) => {
+              return el.aws_image_path.toLowerCase().indexOf(f.toLowerCase()) >= 0;
+            });
+          });
+        }
+        this.domainNameList(this.searchResult, this.allData);
+        this.dataSource = new MatTableDataSource(this.searchResult);
+        this.ref.detectChanges();
       }
-      this.domainNameList(this.searchResult, this.allData);
-      this.dataSource = new MatTableDataSource(this.searchResult);
-      this.ref.detectChanges();
     });
   }
 
@@ -176,11 +174,13 @@ export class AppComponent implements OnInit{
     }
     if(this.searchResult.length === 0){
       this.machedData.splice(index + 1, 0, obj);
+      this.allData.splice(index + 1, 0, obj);
       this.domainNameList(this.allData, this.allData);
       this.dataSource = new MatTableDataSource(this.machedData);
     } else {
       this.searchResult.splice(index + 1, 0, obj);
       this.machedData.splice(this.machedData.indexOf(row) + 1, 0, obj);
+      this.allData.splice(index + 1, 0, obj);
       this.domainNameList(this.searchResult, this.allData);
       this.dataSource = new MatTableDataSource(this.searchResult);
     }
@@ -242,5 +242,15 @@ export class AppComponent implements OnInit{
         });
       }
     }
+  }
+
+  saveData(){
+    debugger;
+    var data = {
+      json_data: this.allData
+    }
+    this._httpService.postData(data).subscribe((res) => {
+      alert("Saved Success");
+    });
   }
 }

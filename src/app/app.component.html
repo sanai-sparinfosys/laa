@@ -8,6 +8,7 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <button mat-button style="background-color: white;color: black;left: 85%;" (click)="saveData()">Submit</button>
   </mat-toolbar>
 </p>
 <div *ngIf="!loader">
@@ -39,18 +40,30 @@
 
         <ng-container matColumnDef="Text">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Text </mat-header-cell>
-          <mat-cell *matCellDef="let row" [ngClass]="'h-250 editable'" contenteditable="true"> {{row.Text}}</mat-cell>
+          <!-- <mat-cell *matCellDef="let row" [ngClass]="'h-250 editable'" contenteditable="true" [(ngModel)]="row.Text"> {{row.Text}}</mat-cell> -->
+          <mat-cell *matCellDef="let row">
+            <mat-form-field floatLabel="never" style="width: 160px;">
+                <input matInput placeholder="Text" 
+                   [value]="row.Text" [(ngModel)]="row.Text">
+            </mat-form-field>
+        </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Domain Dictionary - Wine Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Domain Dictionary - Wine Name </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250 editable'" contenteditable="true"> {{row["Domain Dictionary - Wine Name"]}} </mat-cell>
+          <!-- <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250 editable'" contenteditable="true" [(ngModel)]="row['Domain Dictionary - Wine Name']"> {{row["Domain Dictionary - Wine Name"]}} </mat-cell> -->
+          <mat-cell *matCellDef="let row">
+            <mat-form-field floatLabel="never" style="width: 160px;">
+                <input matInput placeholder="Domain Dictionary - Wine Name" 
+                   [value]="row['Domain Dictionary - Wine Name']" [(ngModel)]="row['Domain Dictionary - Wine Name']">
+            </mat-form-field>
+        </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Wine Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Name </mat-header-cell>
           <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'">
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="example-full-width" style="width: 160px;">
               <mat-label>Wine Name</mat-label>
               <input type="text"
                      placeholder="Enter wine name"
@@ -108,12 +121,24 @@
 
         <ng-container matColumnDef="BTG">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-75 h-250'"> BTG </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" contenteditable="true"> {{row.BTG}} </mat-cell>
+          <!-- <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" [(ngModel)]="row.BTG" contenteditable="true"> {{row.BTG}} </mat-cell> -->
+          <mat-cell *matCellDef="let row">
+            <mat-form-field floatLabel="never">
+                <input matInput placeholder="BTG" 
+                   [value]="row.BTG" [(ngModel)]="row.BTG">
+            </mat-form-field>
+        </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="BTB">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'w-75 h-250'"> BTB </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" contenteditable="true"> {{row.BTB}} </mat-cell>
+          <!-- <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'w-75 h-250 editable'" [(ngModel)]="row.BTB" contenteditable="true"> {{row.BTB}} </mat-cell> -->
+          <mat-cell *matCellDef="let row">
+            <mat-form-field floatLabel="never">
+                <input matInput placeholder="BTB" 
+                   [value]="row.BTB" [(ngModel)]="row.BTB">
+            </mat-form-field>
+        </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="Confidence">

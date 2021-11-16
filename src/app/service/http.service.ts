@@ -10,10 +10,14 @@ export class HttpService {
   constructor(private  httpClient:HttpClient) { }
 
   getData(imagePath): Observable<any>{
-    return this.httpClient.get("http://52.14.186.140:9000/process_and_load_data_api?aws_image_path="+imagePath);
+    return this.httpClient.get("http://18.189.137.35:9000/process_and_load_data_api?aws_image_path="+imagePath);
   }
 
   getImages(): Observable<any>{
-    return this.httpClient.get("http://52.14.186.140:9000/aws/images");
+    return this.httpClient.get("http://18.189.137.35:9000/aws/images");
+  }
+
+  postData(data): Observable<any>{
+    return this.httpClient.post("http://18.189.137.35:9000/save_user_verified_extraction", data);
   }
 }
