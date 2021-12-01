@@ -245,7 +245,6 @@ export class AppComponent implements OnInit{
   }
 
   saveData(){
-    debugger;
     var data = {
       json_data: this.allData
     }

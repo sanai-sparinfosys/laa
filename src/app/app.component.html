@@ -40,24 +40,24 @@
 
         <ng-container matColumnDef="Text">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Text </mat-header-cell>
-          <!-- <mat-cell *matCellDef="let row" [ngClass]="'h-250 editable'" contenteditable="true" [(ngModel)]="row.Text"> {{row.Text}}</mat-cell> -->
-          <mat-cell *matCellDef="let row">
+          <mat-cell *matCellDef="let row" [ngClass]="'h-250'" [(ngModel)]="row.Text"> {{row.Text}}</mat-cell>
+          <!-- <mat-cell *matCellDef="let row">
             <mat-form-field floatLabel="never" style="width: 160px;">
                 <input matInput placeholder="Text" 
                    [value]="row.Text" [(ngModel)]="row.Text">
             </mat-form-field>
-        </mat-cell>
+        </mat-cell> -->
         </ng-container>
 
         <ng-container matColumnDef="Domain Dictionary - Wine Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Domain Dictionary - Wine Name </mat-header-cell>
-          <!-- <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250 editable'" contenteditable="true" [(ngModel)]="row['Domain Dictionary - Wine Name']"> {{row["Domain Dictionary - Wine Name"]}} </mat-cell> -->
-          <mat-cell *matCellDef="let row">
+          <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250'" [(ngModel)]="row['Domain Dictionary - Wine Name']"> {{row["Domain Dictionary - Wine Name"]}} </mat-cell>
+          <!-- <mat-cell *matCellDef="let row">
             <mat-form-field floatLabel="never" style="width: 160px;">
                 <input matInput placeholder="Domain Dictionary - Wine Name" 
                    [value]="row['Domain Dictionary - Wine Name']" [(ngModel)]="row['Domain Dictionary - Wine Name']">
             </mat-form-field>
-        </mat-cell>
+        </mat-cell> -->
         </ng-container>
 
         <ng-container matColumnDef="Wine Name">
