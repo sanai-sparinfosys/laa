@@ -19,13 +19,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UniquePipe } from './pipes/unique.pipe';
 import { FormsModule } from '@angular/forms';
+import { ClientPageComponent } from './client-page/client-page.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SplitLastPipe,
-    UniquePipe
+    UniquePipe,
+    ClientPageComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
