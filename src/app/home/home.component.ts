@@ -53,19 +53,20 @@ export class HomeComponent implements OnInit {
       for(var i=0;i<5;i++){
         this.pages.push(i+1);
       }
-      this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
-        this.loader = false;
-        if(Object.keys(data).length != 0){
-          this.allData = JSON.parse(data.matched_data);
-          this.machedData = this.allData.filter((el) => {
-            return el.Status.indexOf("Matched With") >= 0;
-          });
-          this.dataSource = new MatTableDataSource(this.machedData);
-          this.dataSource.paginator = this.paginator;
-          this.domainNameList(this.allData, this.machedData);
-          this.dataSource.sort = this.sort;
-        }
-      });
+      this.loader = false;
+      // this._httpService.getData(this.images[0].aws_image_path).subscribe((data) => {
+      //   this.loader = false;
+      //   if(Object.keys(data).length != 0){
+      //     this.allData = JSON.parse(data.matched_data);
+      //     this.machedData = this.allData.filter((el) => {
+      //       return el.Status.indexOf("Matched With") >= 0;
+      //     });
+      //     this.dataSource = new MatTableDataSource(this.machedData);
+      //     this.dataSource.paginator = this.paginator;
+      //     this.domainNameList(this.allData, this.machedData);
+      //     this.dataSource.sort = this.sort;
+      //   }
+      // });
     });
   }
 
@@ -251,10 +252,11 @@ export class HomeComponent implements OnInit {
     }
     this._httpService.postData(data).subscribe((res) => {
       alert("Saved Success");
+      window.location.reload();
     });
   }
 
   verifyPage(){
-    this.router.navigate([]).then(result => {  window.open('/verify', '_blank'); });
+    this.router.navigate([]).then(result => {  window.open('#/verify', '_blank'); });
   }
 }

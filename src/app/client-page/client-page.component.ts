@@ -103,8 +103,9 @@ export class ClientPageComponent implements OnInit {
     var data = {
       json_data: this.allData
     }
-    this._httpService.postData(data).subscribe((res) => {
+    this._httpService.submitInvalidData(data).subscribe((res) => {
       alert("Saved Success");
+      window.location.reload();
     });
   }
 }

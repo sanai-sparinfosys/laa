@@ -150,7 +150,7 @@
           <ng-container matColumnDef="Status">
             <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Status </mat-header-cell>
             <mat-cell *matCellDef="let row; index as i;" [style.color]="row.color" [ngClass]="'h-250'" style="display: inline;">
-              <span class="p-15"><input type="radio" name="status{{i}}" value="valid" (click)="radioChange(row, 'valid')"> Valid</span>
+              <span class="p-15"><input type="radio" name="status{{i}}" value="valid" [disabled]="row.Review" (click)="radioChange(row, 'valid')"> Valid</span>
               <span class="p-15"><input type="radio" name="status{{i}}" value="invalid" (click)="radioChange(row, 'invalid')"> InValid </span>
               <span class="p-15"><mat-checkbox (click)="deleteData(row)">Delete</mat-checkbox></span>
               <span class="p-15"><mat-checkbox [checked]="row.Review == undefined">Not Reviewed{{status[i]}}</mat-checkbox></span>

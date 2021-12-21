@@ -21,6 +21,10 @@ export class HttpService {
     return this.httpClient.post("http://18.189.137.35:9000/submit_validated_data", data);
   }
 
+  submitInvalidData(data): Observable<any>{
+    return this.httpClient.post("http://18.189.137.35:9000/submit_invalid_data", data);
+  }
+
   getValidData(): Observable<any>{
     return this.httpClient.get("http://18.189.137.35:9000/get_validated_data");
   }
