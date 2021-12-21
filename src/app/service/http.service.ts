@@ -18,10 +18,10 @@ export class HttpService {
   }
 
   postData(data): Observable<any>{
-    return this.httpClient.post("http://18.189.137.35:9000/save_user_verified_extraction", data);
+    return this.httpClient.post("http://18.189.137.35:9000/submit_validated_data", data);
   }
 
-  getValidData(data): Observable<any>{
-    return this.httpClient.get("http://18.189.137.35:9000/get_validated_data_v2", data);
+  getValidData(): Observable<any>{
+    return this.httpClient.get("http://18.189.137.35:9000/get_validated_data");
   }
 }

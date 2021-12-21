@@ -8,7 +8,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <button mat-button style="background-color: white;color: black;left: 85%;" (click)="saveData()">Submit</button>
+      <button mat-button style="background-color: white;color: black;left: 76%;" (click)="saveData()">Submit</button>
     </mat-toolbar>
   </p>
   <div *ngIf="!loader">
@@ -19,7 +19,7 @@
           <ng-container matColumnDef="aws_image_path">
             <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Aws Image Path </mat-header-cell>
             <mat-cell *matCellDef="let row" [ngClass]="'h-250'" style="display: inline;">
-              <a href={{row.image_url}} target="_blank" rel="noopener noreferrer">{{row.aws_image_path | splitLast:'/' | uppercase}}</a>
+              <a href={{row.image_url}} target="_blank" rel="noopener noreferrer">{{row.Aws_Image_Path | splitLast:'/' | uppercase}}</a>
             </mat-cell>
           </ng-container>
   
@@ -40,12 +40,12 @@
   
           <ng-container matColumnDef="Wine Varietal">
             <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Varietal </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250'"> {{row['Domain Dictionary - Wine Varietal']}} </mat-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250'"> {{row['Wine Varietal']}} </mat-cell>
           </ng-container>
   
           <ng-container matColumnDef="Wine Type">
             <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'h-250'"> Wine Type </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250'"> {{row['Domain Dictionary - Wine Type']}} </mat-cell>
+            <mat-cell *matCellDef="let row" [style.color]="row.color" [ngClass]="'h-250'"> {{row['Wine Type']}} </mat-cell>
           </ng-container>
   
           <ng-container matColumnDef="BTG">
